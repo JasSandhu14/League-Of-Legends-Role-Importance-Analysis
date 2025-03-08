@@ -1,1 +1,1 @@
-# LoLProject
+# League of Legends Project
