@@ -94,11 +94,11 @@ From the aggregated table, our suspicion was correct as jungle and support have 
 From the original dataset, `ban5` is a column that showed the 5th champion that was banned from the game. In the professional Leauge of Legends games, both teams have an opportunity to ban five champions from the other team. I believe that this column is not missing at random (NMAR) as I could not point out a pattern in the missingness of the data. I reason that some teams purposely decided not to ban a fifth champion, which would make the missing data point dependent on the actual value of the missing data point itself. To make this column missing at random (MAR), a new column that checks to see if the total number of bans were used can provide more insight into the missing data point. 
 
 ### Missingness Dependency
-In the dataset, `damagemitigatedperminute` has a some missing values. I'm going to test if the missingness of these values is dependes on other columns, in particular, `datacompleteness` and `position`. The significance level I chose for both tests is 0.05 and test statistic is TVD.
+In the dataset, `damagemitigatedperminute` has a some missing values. I'm going to test if the missingness of these values is dependes on other columns, in particular, `datacompleteness` and `position`. The significance level I chose for both tests is 0.05 and test statistic is Total Variation Distance (TVD).
 
-Null: Distribution of datacompleteness when damagemitigated is missing is the same as the distribution of datacompleteness when damagemitigated is not missing.
+**Null Hypothesis**: Distribution of datacompleteness when damagemitigated is missing is the same as the distribution of datacompleteness when damagemitigated is not missing.
 
-Alt: Distribution of datacompleteness when damagemitigated is missing is NOT the same as the distribution of datacompleteness when damagemitigated is not missing.
+**Alternative Hypothesis**: Distribution of datacompleteness when damagemitigated is missing is NOT the same as the distribution of datacompleteness when damagemitigated is not missing.
 
 Below is the observed distribution of `datacompleteness` when `damagemitigatedperminute` is missing and not missing.
 
@@ -120,9 +120,9 @@ Since the p-value is less than the significance level of 0.05, we reject the nul
 
 The second permutation test is on the `position` column with the same missingness column `damagemitigatedperminute`.
 
-Null: Distribution of position when damagemitigated is missing is the same as the distribution of position when damagemitigated is not missing.
+**Null Hypothesis**: Distribution of position when damagemitigated is missing is the same as the distribution of position when damagemitigated is not missing.
 
-Alt: Distribution of position when damagemitigated is missing is NOT the same as the distribution of position when damagemitigated is not missing.
+**Alternative Hypothesis**: Distribution of position when damagemitigated is missing is NOT the same as the distribution of position when damagemitigated is not missing.
 
 Below is the observed distributino of `position` when `damagemitigatedperminute` is missing and not missing.
 
@@ -146,4 +146,11 @@ Once again, off first glance, the data seems to be straightforward but I'll perf
 Since the p-value is greater than the significance level of 0.05, we fail to reject the null hypothesis, meaning that the missingness of `damagemitigatedperminute` is not dependent on `position`.
 
 ## Hypothesis Testing
-After cleaning and exploring the data, 
+After cleaning and exploring the data, I decided to see if all roles have the same impact.
+
+**Null Hypothesis**: All roles have the same impact
+**Alternative Hypothesis**: All roles do not have the same impact
+
+For my hypothesis test, the test statistic I used was Total Variation Distance (TVD) with a significance level of 0.05, which is commonly used to test statistical significance. TVD was used in the scenario since I'm comparing categorical distributions of the different positions. 
+
+I ran three seperate tests, on `kills + assists`, `damage per minute`, and `earned gold per minute`.
