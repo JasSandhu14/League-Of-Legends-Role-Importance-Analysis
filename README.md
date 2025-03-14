@@ -71,7 +71,7 @@ Finally, I decided to look at the number of kills + assists per role to see if t
 <iframe
   src="assets/bivariate1.html"
   width="800"
-  height="600"
+  height="700"
   frameborder="0"
 ></iframe>
 However, it seems as though all roles are relatively similar in this regard. This implies that the roles that were unable to inflict a lot of damage makes up for it by assisting and participating in kills.
@@ -107,7 +107,8 @@ Below is the observed distribution of `datacompleteness` when `damagemitigatedpe
 | complete           |       1         |      0         |
 | partial            |       0         |      1         |
 
-It is clear that the missingess of `damagemitigatedperminute` depends on datacompleteness but we will perform a permutation test to make sure. From our permutation test, the observed TVD is 1.0 and the p-value for the test is 0.0.
+It is clear that the missingess of `damagemitigatedperminute` depends on datacompleteness but I will perform a permutation test to make sure. From our permutation test, the observed TVD is 1.0 and the p-value for the test is 0.0.
+
 <iframe
   src="assets/missing1.html"
   width="800"
@@ -117,4 +118,32 @@ It is clear that the missingess of `damagemitigatedperminute` depends on datacom
 
 Since the p-value is less than the significance level of 0.05, we reject the null hypothesis, meaning that the missingness of `damagemitigatedperminute` is dependent on `datacompleteness`. 
 
-The second column we are testing
+The second permutation test is on the `position` column with the same missingness column `damagemitigatedperminute`.
+
+Null: Distribution of position when damagemitigated is missing is the same as the distribution of position when damagemitigated is not missing.
+
+Alt: Distribution of position when damagemitigated is missing is NOT the same as the distribution of position when damagemitigated is not missing.
+
+Below is the observed distributino of `position` when `damagemitigatedperminute` is missing and not missing.
+
+| position   |   missing=False |   missing=True |
+|:-----------|----------------:|---------------:|
+| bot        |             0.2 |            0.2 |
+| jng        |             0.2 |            0.2 |
+| mid        |             0.2 |            0.2 |
+| sup        |             0.2 |            0.2 |
+| top        |             0.2 |            0.2 |
+
+Once again, off first glance, the data seems to be straightforward but I'll perform permutation test again to ensure this. From the permuation test, the observed TVD is 0.0 and I got a p-value of 1.0. 
+
+<iframe
+  src="assets/missing2.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Since the p-value is greater than the significance level of 0.05, we fail to reject the null hypothesis, meaning that the missingness of `damagemitigatedperminute` is not dependent on `position`.
+
+## Hypothesis Testing
+After cleaning and exploring the data, 
