@@ -78,6 +78,7 @@ However, it seems as though all roles are relatively similar in this regard. Thi
 
 ### Interesting Aggregates
 According to the trends spotted in the bivariate analysis, I decided to calculate the mean of various statistics grouped according each role.
+
 | position   |    kills |   deaths |   assists |     dpm |   damagemitigatedperminute |    vspm |   earned gpm |   minionkills |   monsterkills |
 |:-----------|---------:|---------:|----------:|--------:|---------------------------:|--------:|-------------:|--------------:|---------------:|
 | bot        | 4.604    |  2.57981 |   5.73648 | 682.659 |                    310.231 | 1.207   |      303.178 |      265.932  |      12.7384   |
@@ -87,3 +88,33 @@ According to the trends spotted in the bivariate analysis, I decided to calculat
 | top        | 2.87513  |  3.0494  |   5.20407 | 552.316 |                   1010.86  | 0.95972 |      256.543 |      239.654  |       6.71928  |
 
 From the aggregated table, our suspicion was correct as jungle and support have a higher average assists than every other role. Our analysis also shows that these roles have lower average minion kills, possibly influencing the earned gold per minute from before. At first glance, while it may seem that bottom and mid lane may be the most important, the other positions influence the game in different ways. Top lane and jungle have the highest mean damage mitigated per minute, support has the highest average vision score per minute, and jungle has a large advantage for average monster kills.
+
+## Assessment of Missingness
+### NMAR Analysis
+From the original dataset, `ban5` is a column that showed the 5th champion that was banned from the game. In the professional Leauge of Legends games, both teams have an opportunity to ban five champions from the other team. I believe that this column is not missing at random (NMAR) as I could not point out a pattern in the missingness of the data. I reason that some teams purposely decided not to ban a fifth champion, which would make the missing data point dependent on the actual value of the missing data point itself. To make this column missing at random (MAR), a new column that checks to see if the total number of bans were used can provide more insight into the missing data point. 
+
+### Missingness Dependency
+In the dataset, `damagemitigatedperminute` has a some missing values. I'm going to test if the missingness of these values is dependes on other columns, in particular, `datacompleteness` and `position`. The significance level I chose for both tests is 0.05 and test statistic is TVD.
+
+Null: Distribution of datacompleteness when damagemitigated is missing is the same as the distribution of datacompleteness when damagemitigated is not missing.
+
+Alt: Distribution of datacompleteness when damagemitigated is missing is NOT the same as the distribution of datacompleteness when damagemitigated is not missing.
+
+Below is the observed distribution of `datacompleteness` when `damagemitigatedperminute` is missing and not missing.
+
+| datacompleteness   |   missing=False |   missing=True |
+|:-------------------|----------------:|---------------:|
+| complete           |       1         |      0         |
+| partial            |       0         |      1         |
+
+It is clear that the missingess of `damagemitigatedperminute` depends on datacompleteness but we will perform a permutation test to make sure. From our permutation test, the observed TVD is 1.0 and the p-value for the test is 0.0.
+<iframe
+  src="assets/missing1.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Since the p-value is less than the significance level of 0.05, we reject the null hypothesis, meaning that the missingness of `damagemitigatedperminute` is dependent on `datacompleteness`. 
+
+The second column we are testing
