@@ -200,5 +200,13 @@ To prevent overfitting, I split the data into 75% training and 25% testing, gran
 ## Baseline Model
 For my baseline model, I decided to keep same features that I used in my previous hypothesis test as we concluded there was a difference between each role. These features are `kills`, `assists`, `dpm`, and `earned gpm`. I also decided to add `deaths` as another feature since it's closely tied to kills and assists (KDA). All these features are quantitative and no encodings were necessary. 
 
-After fitting the model, the accuracy score on the training data is 0.49, meaning my model is able to correctly predict the position 49% of the time. Although this is better than guessing a single role (which would be correct 20% of the time), there are still a lot of improvements to be made to increase the accuracy. 
+After fitting the model, the accuracy score on the training data is 0.49, meaning my model is able to correctly predict the position 49% of the time. Although this is better than guessing a single role everytime (which would be correct 20% of the time), there are still a lot of improvements to be made to increase the accuracy. 
 
+## Final Model
+To improve the accuracy of the model, I included the features that were noted in the first aggregation, revealing where each role specialized in. Since some roles specialized in killing minions or monsters, I included `minionkills` and `monsterkills` as new features. Similarly, support performed higher on average in vision score per minute, so `vspm` was also included as a feature. Since `dpm`, `earned gpm`, and `vspm` are statistics per minute, they are already standardized for the length of the game. Thus, I had to use a StandardScaler for `minionkills` and `monsterkills` as they are quantitative features. 
+
+As we continue to add features, I'm confident in the performance of the random forest classifier as it is well suited to handle various features with less risk of overfitting or performance loss. To improve my model performance even more, I used a grid search to find the best hyperparameters to use for my model. The search found the best hyperparameters for my random forest to be criterion as 'gini', a max depth of 10, and a minimum sample split of 5.
+
+After implementing the new features and hyperparameters, the updated model was able to achive an accuracy score of 0.71 on the training data, a roughly 20% increase from the previous model. The new features and hyperparameters proved to be effective in improving model performance, and thus, we have a higher chance of correctly predicting a player's role given their stats.
+
+## Fairness Analysis
