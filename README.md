@@ -150,7 +150,7 @@ For my hypothesis test, the test statistic I used was Total Variation Distance (
 P-value = 0.0
 
 <iframe
-  src="assets/ka_hypetest.html"
+  src="assets/KA_Hypot_Test.html"
   width="800"
   height="600"
   frameborder="0"
@@ -162,7 +162,7 @@ Since the p-value is below the significance level of 0.05, we reject the null hy
 P-value = 0.0
 
 <iframe
-  src="assets/dpm_hypetest.html"
+  src="assets/DPM_Hypot_Test.html"
   width="800"
   height="600"
   frameborder="0"
@@ -174,7 +174,7 @@ Since the p-value is below the significane level of 0.05, we reject the null hyp
 P-Value = 0.0
 
 <iframe
-  src="assets/gpm_hypetest.html"
+  src="assets/GPM_Hypot_Test.html"
   width="800"
   height="600"
   frameborder="0"
