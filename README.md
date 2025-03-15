@@ -210,3 +210,18 @@ As we continue to add features, I'm confident in the performance of the random f
 After implementing the new features and hyperparameters, the updated model was able to achive an accuracy score of 0.71 on the training data, a roughly 20% increase from the previous model. The new features and hyperparameters proved to be effective in improving model performance, and thus, we have a higher chance of correctly predicting a player's role given their stats.
 
 ## Fairness Analysis
+To test the fairness of the model, we going to see if the model predicts differently based on different groups. In this section, I'm interested in seeing if the number of deaths influences the models prediction. Group X is this scenario will be players with more than 3 deaths while Group Y will be player with less than or equal to 3 deaths. The line was set at 3 deaths, as the median and mean were 3, so we should have a similar distribution in both groups. 
+
+**Null Hypothesis:** The accuracy of the model is the same for players with more than 3 deaths as it is for players with less than or equal to 3 deaths.
+**Alternative Hypothesis:** The accuracy of the model is not the same for players with more than 3 deaths as it is for players with less than or equal to 3 deaths.
+
+The test statistic is the difference in accuracy between the two groups. After performing a permutation test according to these parameters, we get a p-value of 0.0.
+
+<iframe
+  src="assets/fairness_test.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Since the p-value is less than the significance value of 0.05, we reject the null hypothesis, showcasing a bias in the model according to the number of deaths. This implies that our model is unfair according to this statistic, as the accuracy of the model is not the same between the two groups..
