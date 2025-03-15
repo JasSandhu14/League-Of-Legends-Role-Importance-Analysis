@@ -193,4 +193,12 @@ Since the p-value is below the significance level of 0.05, we reject the null hy
 From our three hypothesis tests, we can reject the null hypothesis, meaning all roles do not seem to have the same impact overall. 
 
 ## Framing a Prediction Problem
-From the previous 
+From the previous problem, we discovered in our aggregation that roles specialized in different aspects of the game. Recall, bottom and mid lane has the most damage but support had the most assists, while jungle and top had the most damage mitigated. Using this information, I'm going to predict a player's role based off their in-game statistics. Since I'm predicting a role out of five possible options, I'm building a multiclass random forest classifier, in order to do so. The response variable in this case would be `position` and to test its success, I'll be using accuracy as it gives me a generalized view of my model's success, and since the number of each players for each role is even, there are no imbalances.
+
+To prevent overfitting, I split the data into 75% training and 25% testing, granting me ample resources to train and test the model. 
+
+## Baseline Model
+For my baseline model, I decided to keep same features that I used in my previous hypothesis test as we concluded there was a difference between each role. These features are `kills`, `assists`, `dpm`, and `earned gpm`. I also decided to add `deaths` as another feature since it's closely tied to kills and assists (KDA). All these features are quantitative and no encodings were necessary. 
+
+After fitting the model, the accuracy score on the training data is 0.49, meaning my model is able to correctly predict the position 49% of the time. Although this is better than guessing a single role (which would be correct 20% of the time), there are still a lot of improvements to be made to increase the accuracy. 
+
