@@ -174,7 +174,7 @@ Since the p-value is below the significane level of 0.05, we reject the null hyp
 P-Value = 0.0
 
 <iframe
-  src="assets/GPM_Hypot_Test.html"
+  src="assets/gpm_test.html"
   width="800"
   height="600"
   frameborder="0"
