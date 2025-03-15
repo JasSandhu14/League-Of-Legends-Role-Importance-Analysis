@@ -151,6 +151,46 @@ After cleaning and exploring the data, I decided to see if all roles have the sa
 **Null Hypothesis**: All roles have the same impact
 **Alternative Hypothesis**: All roles do not have the same impact
 
-For my hypothesis test, the test statistic I used was Total Variation Distance (TVD) with a significance level of 0.05, which is commonly used to test statistical significance. TVD was used in the scenario since I'm comparing categorical distributions of the different positions. 
+For my hypothesis test, the test statistic I used was Total Variation Distance (TVD) with a significance level of 0.05, which is commonly used to test statistical significance. TVD was used in the scenario since I'm comparing categorical distributions of the different positions. I ran three seperate tests, on `kills + assists`, `damage per minute`, and `earned gold per minute` as the exploratory data analysis showed that different roles specialized in different aspects of the game. I also used per minute statistics for damage and earned gold as some games could've last longe than others, allowing players to get more damage and coins. 
 
-I ran three seperate tests, on `kills + assists`, `damage per minute`, and `earned gold per minute`.
+**Results for Kills+Assists:**
+P-value = 0.0
+
+<iframe
+  src="assets/ka_hypetest.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Since the p-value is below the significance level of 0.05, we reject the null hypothesis, indicating that all roles do not have the same average kills + assists.
+
+**Results for Damage Per Minute:**
+P-value = 0.0
+
+<iframe
+  src="assets/dpm_hypetest.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Since the p-value is below the significane level of 0.05, we reject the null hypothesis, indicating that all roles do not have the same average damage per minute.
+
+**Results for Earned Gold Per Minute:**
+P-Value = 0.0
+
+<iframe
+  src="assets/gpm_hypetest.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Since the p-value is below the significance level of 0.05, we reject the null hypothesis, indicating that all roles do not have the same average earned gold per minute.
+
+### Overall Conclusion
+From our three hypothesis tests, we can reject the null hypothesis, meaning all roles do not seem to have the same impact overall. 
+
+## Framing a Prediction Problem
+From the previous 
