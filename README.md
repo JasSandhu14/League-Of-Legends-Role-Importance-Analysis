@@ -5,7 +5,7 @@ Author: Jas Sandhu
 League of Legends (LoL) is a popular online multiplayer game released by Riot Games. The gameplay consists of two teams of five players, each with a unique role, as they attempt to destroy the enemy team's base, known as the Nexus. With over 150 playable characters, each player has one of five roles: top, jungle, middle, bottom, or support, which all serve different purposes throughout the game. With the mass popularity of the game, debates have sparked for which role is considered the most important, which is what I hope to gain insight into with this project.
 
 ### The Dataset
-The dataset used for this analysis is the [2024 League of Legends Esports Stats dataset]() provided by Oracle's Elixir which includes data from professional League of Legends matches across the world. The data includes 117576 rows and 161 columns. The following table shows the most important columns to the analysis.
+The dataset used for this analysis is the 2024 League of Legends Esports Stats dataset provided by Oracle's Elixir which includes data from professional League of Legends matches across the world. The data includes 117576 rows and 161 columns. The following table shows the most important columns to the analysis.
 
 | **Column Name**     | **Definition**                                               |
 | ------------------- | ------------------------------------------------------------ |
@@ -17,10 +17,6 @@ The dataset used for this analysis is the [2024 League of Legends Esports Stats 
 | `kills`             | total kills per player                                       |
 | `deaths`            | total deaths per player                                      |
 | `assists`           | total assists per player                                     |
-| `doublekills`       | the number of double kills performed by player               |
-| `triplekills`       | the number of triple kills performed by player               |
-| `quadrakills`       | the number of quadra kills performed by player               |
-| `pentakills`        | the number of penta kills performed by player                |
 | `firstbloodkill`    | whether the player got the first kill of the game            |
 | `firstbloodassist`  | whether the player assisted in the first kill of the game    |
 | `firstbloodvictim`  | whether the player was the first death of the game           |
@@ -36,7 +32,7 @@ The dataset used for this analysis is the [2024 League of Legends Esports Stats 
 
 ## Data Cleaning and Exploratory Data Analysis
 ### Data Cleaning
-For ease of analysis, only the columns that were relevant to the analysis were kept leaving us with 23 columns. Additionally, rows were split according to the individual players stats and collective team stats for each game. Since I am interested in analyzing individual performance, I removed all rows that were not on player data. In other words, I removed all rows that contained collective team data. The `result` column was also changed to booleans, where `True` means the player won and `False` means the player lost, making it easier to understand. Similar alterations were made to `firstbloodkill`, `firstbloodassist`, and `firstbloodvictim`, making it easier to read first blood data. After cleaning, the dataset contains 97980 rows and 23 columns. 
+For ease of analysis, only the columns that were relevant to the analysis were kept leaving us with 20 columns. Additionally, rows were split according to the individual players stats and collective team stats for each game. Since I am interested in analyzing individual performance, I removed all rows that were not on player data. In other words, I removed all rows that contained collective team data. The `result` column was also changed to booleans, where `True` means the player won and `False` means the player lost, making it easier to understand. Similar alterations were made to `firstbloodkill`, `firstbloodassist`, and `firstbloodvictim`, making it easier to read first blood data. After cleaning, the dataset contains 97980 rows and 20 columns. 
 
 ### Univariate Analysis
 A univariate analysis on the distribution of champions across all games. 
@@ -56,18 +52,14 @@ Bivariate analysis on the distribution of kills + assists, damage per minute, an
   height="600"
   frameborder="0"
 ></iframe>
-Bottom and Mid Laners have a clear advantage in this regard, with support and jungle having a clear disadvantage. At first glance it seems as though bottom and mid laners are more influential in this regard. 
-
-I then decided to do another analysis on earned gold per minute, as it seems there is a disparity between the damage certain roles have inflict. 
+Bottom and Mid Laners have a clear advantage in this regard, with support and jungle having a clear disadvantage. At first glance it seems as though bottom and mid laners are more influential in this regard. I then decided to do another analysis on earned gold per minute, as it seems there is a disparity between the damage certain roles can inflict. 
 <iframe
   src="assets/bivariate3.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
-As this graph shows, there is a similar trend in the earned gold per minute as there was in the damage per minute. This implies that there is a connection between a role's ability to earn gold and inflict damage, which makes sense as gold is commonly earned by killing champions and minions.
-
-Finally, I decided to look at the number of kills + assists per role to see if this trend continues.
+As this graph shows, there is a similar trend in the earned gold per minute as there was in the damage per minute. This implies that there is a connection between a role's ability to earn gold and inflict damage, which makes sense as gold is commonly earned by killing champions and minions. Finally, I decided to look at the number of kills + assists per role to see if this trend continues.
 <iframe
   src="assets/bivariate1.html"
   width="800"
@@ -91,14 +83,14 @@ From the aggregated table, our suspicion was correct as jungle and support have 
 
 ## Assessment of Missingness
 ### NMAR Analysis
-From the original dataset, `ban5` is a column that showed the 5th champion that was banned from the game. In the professional Leauge of Legends games, both teams have an opportunity to ban five champions from the other team. I believe that this column is not missing at random (NMAR) as I could not point out a pattern in the missingness of the data. I reason that some teams purposely decided not to ban a fifth champion, which would make the missing data point dependent on the actual value of the missing data point itself. To make this column missing at random (MAR), a new column that checks to see if the total number of bans were used can provide more insight into the missing data point. 
+From the original dataset, `ban5` is a column that showed the 5th champion that was banned from the game. In professional Leauge of Legends games, both teams have an opportunity to ban five champions from the other team. I believe that this column is not missing at random (NMAR) as I could not point out a pattern in the missingness of the data. I reason that some teams purposely decided not to ban a fifth champion, which would make the missing data point dependent on the actual value of the missing data point itself. To make this column missing at random (MAR), a new column that checks to see if the total number of bans were used can provide more insight into the missing data point. 
 
 ### Missingness Dependency
 In the dataset, `damagemitigatedperminute` has a some missing values. I'm going to test if the missingness of these values is dependes on other columns, in particular, `datacompleteness` and `position`. The significance level I chose for both tests is 0.05 and test statistic is Total Variation Distance (TVD).
 
-**Null Hypothesis**: Distribution of datacompleteness when damagemitigated is missing is the same as the distribution of datacompleteness when damagemitigated is not missing.
+**Null Hypothesis**: Distribution of `datacompleteness` when `damagemitigated` is missing is the same as the distribution of `datacompleteness` when `damagemitigated` is not missing.
 
-**Alternative Hypothesis**: Distribution of datacompleteness when damagemitigated is missing is NOT the same as the distribution of datacompleteness when damagemitigated is not missing.
+**Alternative Hypothesis**: Distribution of `datacompleteness` when `damagemitigated` is missing is NOT the same as the distribution of `datacompleteness` when `damagemitigated` is not missing.
 
 Below is the observed distribution of `datacompleteness` when `damagemitigatedperminute` is missing and not missing.
 
@@ -107,7 +99,7 @@ Below is the observed distribution of `datacompleteness` when `damagemitigatedpe
 | complete           |       1         |      0         |
 | partial            |       0         |      1         |
 
-It is clear that the missingess of `damagemitigatedperminute` depends on datacompleteness but I will perform a permutation test to make sure. From our permutation test, the observed TVD is 1.0 and the p-value for the test is 0.0.
+It is clear that the missingess of `damagemitigatedperminute` depends on `datacompleteness` but I will perform a permutation test to make sure. From our permutation test, the observed TVD is 1.0 and the p-value for the test is 0.0.
 
 <iframe
   src="assets/missing1.html"
@@ -120,9 +112,9 @@ Since the p-value is less than the significance level of 0.05, we reject the nul
 
 The second permutation test is on the `position` column with the same missingness column `damagemitigatedperminute`.
 
-**Null Hypothesis**: Distribution of position when damagemitigated is missing is the same as the distribution of position when damagemitigated is not missing.
+**Null Hypothesis**: Distribution of `position` when `damagemitigated` is missing is the same as the distribution of `position` when `damagemitigated` is not missing.
 
-**Alternative Hypothesis**: Distribution of position when damagemitigated is missing is NOT the same as the distribution of position when damagemitigated is not missing.
+**Alternative Hypothesis**: Distribution of `position` when `damagemitigated` is missing is NOT the same as the distribution of `position` when `damagemitigated` is not missing.
 
 Below is the observed distributino of `position` when `damagemitigatedperminute` is missing and not missing.
 
@@ -149,9 +141,10 @@ Since the p-value is greater than the significance level of 0.05, we fail to rej
 After cleaning and exploring the data, I decided to see if all roles have the same impact.
 
 **Null Hypothesis**: All roles have the same impact
+
 **Alternative Hypothesis**: All roles do not have the same impact
 
-For my hypothesis test, the test statistic I used was Total Variation Distance (TVD) with a significance level of 0.05, which is commonly used to test statistical significance. TVD was used in the scenario since I'm comparing categorical distributions of the different positions. I ran three seperate tests, on `kills + assists`, `damage per minute`, and `earned gold per minute` as the exploratory data analysis showed that different roles specialized in different aspects of the game. I also used per minute statistics for damage and earned gold as some games could've last longe than others, allowing players to get more damage and coins. 
+For my hypothesis test, the test statistic I used was Total Variation Distance (TVD) with a significance level of 0.05, which is commonly used to test statistical significance. TVD was used in the scenario since I'm comparing categorical distributions of the different positions. I ran three seperate tests, on `kills + assists`, `damage per minute`, and `earned gold per minute` as the exploratory data analysis showed that different roles specialized in different aspects of the game. I also used per minute statistics for damage and earned gold as some games could've lasted longer than others, allowing players to get more damage and coins. 
 
 **Results for Kills+Assists:**
 P-value = 0.0
@@ -193,17 +186,17 @@ Since the p-value is below the significance level of 0.05, we reject the null hy
 From our three hypothesis tests, we can reject the null hypothesis, meaning all roles do not seem to have the same impact overall. 
 
 ## Framing a Prediction Problem
-From the previous problem, we discovered in our aggregation that roles specialized in different aspects of the game. Recall, bottom and mid lane has the most damage but support had the most assists, while jungle and top had the most damage mitigated. Using this information, I'm going to predict a player's role based off their in-game statistics. Since I'm predicting a role out of five possible options, I'm building a multiclass random forest classifier, in order to do so. The response variable in this case would be `position` and to test its success, I'll be using accuracy as it gives me a generalized view of my model's success, and since the number of each players for each role is even, there are no imbalances.
+From the previous problem, we discovered in our aggregation that roles specialized in different aspects of the game. Recall, bottom and mid lane has the most damage but support had the most assists, while jungle and top had the most damage mitigated. Using this information, I'm going to predict a player's role based off their in-game statistics. Since I'm predicting a role out of five possible options, I'm building a multiclass random forest classifier, in order to do so. The response variable in this case would be `position` and to test its success, I'll be using accuracy as it gives me a generalized view of my model's success. Also since the number of each players for each role is even, there are no imbalances, so accuracy works.
 
 To prevent overfitting, I split the data into 75% training and 25% testing, granting me ample resources to train and test the model. 
 
 ## Baseline Model
-For my baseline model, I decided to keep same features that I used in my previous hypothesis test as we concluded there was a difference between each role. These features are `kills`, `assists`, `dpm`, and `earned gpm`. I also decided to add `deaths` as another feature since it's closely tied to kills and assists (KDA). All these features are quantitative and no encodings were necessary. 
+For my baseline model, I decided to keep the same features that I used in my previous hypothesis test as we concluded there was a difference between each role. These features are `kills`, `assists`, `dpm`, and `earned gpm`. I also decided to add `deaths` as another feature since it's closely tied to kills and assists (KDA). All these features are quantitative and no encodings were necessary. 
 
 After fitting the model, the accuracy score on the training data is 0.49, meaning my model is able to correctly predict the position 49% of the time. Although this is better than guessing a single role everytime (which would be correct 20% of the time), there are still a lot of improvements to be made to increase the accuracy. 
 
 ## Final Model
-To improve the accuracy of the model, I included the features that were noted in the first aggregation, revealing where each role specialized in. Since some roles specialized in killing minions or monsters, I included `minionkills` and `monsterkills` as new features. Similarly, support performed higher on average in vision score per minute, so `vspm` was also included as a feature. Since `dpm`, `earned gpm`, and `vspm` are statistics per minute, they are already standardized for the length of the game. Thus, I had to use a StandardScaler for `minionkills` and `monsterkills` as they are quantitative features. 
+To improve the accuracy of the model, I included the features that were noted in the first aggregation, revealing where each role specialized in. Since some roles specialized in killing minions or monsters, I included `minionkills` and `monsterkills` as new features. Similarly, support performed higher on average in vision score per minute, so `vspm` was also included as a feature. Since `dpm`, `earned gpm`, and `vspm` are statistics per minute, they are already standardized for the length of the game. Thus, I had to use a StandardScaler for `minionkills` and `monsterkills` as they are quantitative features, to normalize them. 
 
 As we continue to add features, I'm confident in the performance of the random forest classifier as it is well suited to handle various features with less risk of overfitting or performance loss. To improve my model performance even more, I used a grid search to find the best hyperparameters to use for my model. The search found the best hyperparameters for my random forest to be criterion as 'gini', a max depth of 10, and a minimum sample split of 5.
 
@@ -213,6 +206,7 @@ After implementing the new features and hyperparameters, the updated model was a
 To test the fairness of the model, we going to see if the model predicts differently based on different groups. In this section, I'm interested in seeing if the number of deaths influences the models prediction. Group X is this scenario will be players with more than 3 deaths while Group Y will be player with less than or equal to 3 deaths. The line was set at 3 deaths, as the median and mean were 3, so we should have a similar distribution in both groups. 
 
 **Null Hypothesis:** The accuracy of the model is the same for players with more than 3 deaths as it is for players with less than or equal to 3 deaths.
+
 **Alternative Hypothesis:** The accuracy of the model is not the same for players with more than 3 deaths as it is for players with less than or equal to 3 deaths.
 
 The test statistic is the difference in accuracy between the two groups. After performing a permutation test according to these parameters, we get a p-value of 0.0.
@@ -224,4 +218,4 @@ The test statistic is the difference in accuracy between the two groups. After p
   frameborder="0"
 ></iframe>
 
-Since the p-value is less than the significance value of 0.05, we reject the null hypothesis, showcasing a bias in the model according to the number of deaths. This implies that our model is unfair according to this statistic, as the accuracy of the model is not the same between the two groups..
+Since the p-value is less than the significance value of 0.05, we reject the null hypothesis, showcasing a bias in the model according to the number of deaths. This implies that our model is unfair according to this statistic, as the accuracy of the model is not the same between the two groups.
