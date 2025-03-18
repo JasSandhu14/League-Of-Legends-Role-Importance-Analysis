@@ -162,7 +162,7 @@ Since the p-value is below the significance level of 0.05, we reject the null hy
 P-value = 0.0
 
 <iframe
-  src="C:\Users\Jas\Documents\GitHub\League-Of-Legends-Role-Importance-Analysis\assets\DPM_Hypot_Test.html"
+  src="assets\DPM_Hypot_Test.html"
   width="800"
   height="600"
   frameborder="0"
